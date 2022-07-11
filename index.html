@@ -192,65 +192,107 @@
     </div> -->
 
 
-    <!-- <div class="container">
-      <div class="ctitle">teaching</div>
-      <div>
-        In 2015 I designed and was the primary instructor for the first deep learning class Stanford - <a href="http://cs231n.stanford.edu/">CS 231n: Convolutional Neural Networks for Visual Recognition</a> ❤️. The class became one of the largest at Stanford and has grown from 150 enrolled in 2015 to 330 students in 2016, and 750 students in 2017.
-        <ul class="tul">
-          <li class="til tilb"><a href="https://www.youtube.com/playlist?list=PLkt2uSq6rBVctENoVBg1TpCC7OQi31AlC">my 2016 lecture videos</a></li>
-          <li class="til tilb"><a href="https://cs231n.github.io/">course notes</a></li>
-          <li class="til tilb"><a href="http://cs231n.stanford.edu/syllabus.html">course syllabus</a></li>
-          <li class="til"><a href="https://www.reddit.com/r/cs231n">r/cs231n</a></li>
-        </ul>
-      </div>
-      <img src="./erfan_files/cs231n_class.jpg" style="max-width:100%; border-radius:10px;">
-    </div> -->
     <div style="background-color: #eee; padding-top: 1px; margin-top: 50px; padding-bottom: 30px;">
-    <div id="pet-projects" class="container">
-      <div class="ctitle">projects</div>
+      <div id="pet-projects" class="container">
+        <div class="ctitle">projects</div>
+        
+        <div class="project">
+          <div class="pico"><img src="./erfan_files/quiver_plot_two.png"></div>
+          <!-- <div class="pdesc"><a href="https://github.com/karpathy/micrograd">microAI</a> is a tiny scalar-valued autograd engine (with a bite! :)). It implements backpropagation (reverse-mode autodiff) over a dynamically built DAG and a small neural networks library on top of it with a PyTorch-like API.</div> -->
+          <div class="pdesc"><a href=http://microai.herokuapp.com/> microAI</a> Is my first experience on deploying a Deep Learning model on production. This webapp uses Deep Learning to calculate the lift coefficients in microfluidic channel cross sections.
+            <ul><li>The model was developed using <b>pyTorch</b></li>
+              <li>Created the API using <b>fastapi</b></li>
+              <li>Deployed on <b>Heroku</b></li></ul></div>
+              <div class="pend"></div>
+            </div>
+            
+            <div class="project">
+              <div class="pico"><img src="./erfan_files/piv_torch.png"></div>
+              <div class="pdesc"><a href="https://github.com/erfanhamdi/torch_PIV">torchPIV</a> Is an attempt to change the pyTorch Conv2D module in a way that fits the needs to be used for faster Particle Image Velocimetry.
+                <ul><li><b>2x Faster</b> than a conventional program using for-loops.</li>
+                  <li>Helped getting deeper on the mechanics of Conv2D kernels in pyTorch.</li></ul></div>
+                  <div class="pend"></div>
+                </div>
+                
+                <div class="project">
+                  <div class="pico"><img src="./erfan_files/pinn-torch.png"></div>
+                  <div class="pdesc"><a href="https://github.com/erfanhamdi/pinn-torch">pinn-torch</a> Is an ongoing project to re-implement every PDE solved using Physics Informed Neural Networks (PINNs) in pyTorch in a consistent way to be able to do parameter study.</div>
+                  <div class="pend"></div>
+                </div>
+                <div class="project">
+                  <div class="pico"><img src="./erfan_files/awesome.jpeg"></div>
+                  <div class="pdesc"><a href="https://github.com/erfanhamdi/awesome-pinn">awesome-pinn</a> Is a curated list on the papers and other materials I found interesting and informative about Physics Informed Neural Networks (PINNs). feel free to make it more awesome!</div>
+                  <div class="pend"></div>
+                </div>      
+                
+                <div class="project">
+                  <div class="pico"><img src="./erfan_files/slc.png"></div>
+                  <div class="pdesc"><b>Streamline Curvatuure Method OOP</b> This was my Bs.c project. Streamline Curvature Method (SLC) is a Finite Difference method mostly used for fast and accurate quasi-2D simulation of flows inside turbomachinary and other fields. In this project I got deeper into CFD and Object-Oriented programming.
+                    <ul><li><b>Object Oriented Programming</b> architecture was used to implement this method.</li>
+                      <li>The finite difference equations were implemented in <b>Vectorized</b> form rather than using for-loops</li>
+                      <li>The programming was done in a way so that it would be possible to implement different <b>loss models</b> easily.</li></ul></div>
+                      <div class="pend"></div>
+                    </div>
+                  </div>      
+                </div>
+                
+                <!-- <div style="background-color: #eee; padding-top: 1px; margin-top: 50px; padding-bottom: 30px;">
+                <div class="container">
+                <div class="ctitle">lectures</div>
 
-      <div class="project">
-        <div class="pico"><img src="./erfan_files/quiver_plot_two.png"></div>
-        <!-- <div class="pdesc"><a href="https://github.com/karpathy/micrograd">microAI</a> is a tiny scalar-valued autograd engine (with a bite! :)). It implements backpropagation (reverse-mode autodiff) over a dynamically built DAG and a small neural networks library on top of it with a PyTorch-like API.</div> -->
-        <div class="pdesc"><a href=http://microai.herokuapp.com/> microAI</a> Is my first experience on deploying a Deep Learning model on production. This webapp uses Deep Learning to calculate the lift coefficients in microfluidic channel cross sections.
-                            <ul><li>The model was developed using <b>pyTorch</b></li>
-                                <li>Created the API using <b>fastapi</b></li>
-                                <li>Deployed on <b>Heroku</b></li></ul></div>
-        <div class="pend"></div>
+                  <div style="margin-top: 40pt; width: 50%; float: left;">
+                  <figure>
+                    <img src="./erfan_files/dlpinn.png" style="max-width:40%; border-radius:10px;">
+                  <figcaption style="font-size: 15px;"> An introductory course on Machine Learning and Deep Learning a case study on PINNs.</figcaption>
+                  </figure>
+                  </div>
+
+                  <div style="margin-top: 40pt; width: 50%; float: left;">
+                    <figure>
+                      <img src="./erfan_files/dlpinn.png" style="max-width:40%; border-radius:10px;">
+                    <figcaption style="font-size: 15px;"> An introductory course on Machine Learning and Deep Learning a case study on PINNs.</figcaption>
+                    </figure>
+                    </div>
+                </div>
+              </div> -->
+                
+    <div style="background-color: #eee; padding-top: 1px; margin-top: 50px; padding-bottom: 30px;">
+      <div class="container">
+        <div class="ctitle">lectures</div>
+<!-- fdf
+        <div style="width: 50%; float: left;">
+          <figure>
+            <img src="./erfan_files/dlpinn.png" style="max-width:40%; border-radius:10px;">
+          <figcaption style="font-size: 15px;"> An introductory course on Machine Learning and Deep Learning a case study on PINNs.</figcaption>
+          </figure>
+          </div> -->
+
+          <div class="row">
+            <div class="card">
+              <a href="reveal_js_pres/ML_DL_PINN/index.html">
+                <div class="ccimg"><img src="./erfan_files/dlpinn.png"></div>
+              </a>
+              <div class="cdesc">Introductory course on ML and DL a case study on PINNs.</div>
+            </div>
+
+              <div class="card">
+                <a href="reveal_js_pres/PIV/index.html">
+                  <div class="ccimg"><img src="./erfan_files/stereoscopicPIV.png"></div>
+                </a>
+                <div class="cdesc">Lecture on Stereoscopic PIV</div>
+              </div>
+<!-- 
+          <div style="width: 50%; float: left;">
+            <figure>
+              <img src="./erfan_files/dlpinn.png" style="max-width:40%; border-radius:10px;">
+            <figcaption style="font-size: 15px;"> An introductory course on Machine Learning and Deep Learning a case study on PINNs.</figcaption>
+            </figure>
+            </div> -->
+
+
+      </div>
       </div>
 
-      <div class="project">
-        <div class="pico"><img src="./erfan_files/piv_torch.png"></div>
-        <div class="pdesc"><a href="https://github.com/erfanhamdi/torch_PIV">torchPIV</a> Is an attempt to change the pyTorch Conv2D module in a way that fits the needs to be used for faster Particle Image Velocimetry.
-                            <ul><li><b>2x Faster</b> than a conventional program using for-loops.</li>
-                                <li>Helped getting deeper on the mechanics of Conv2D kernels in pyTorch.</li></ul></div>
-        <div class="pend"></div>
-      </div>
-
-      <div class="project">
-        <div class="pico"><img src="./erfan_files/pinn-torch.png"></div>
-        <div class="pdesc"><a href="https://github.com/erfanhamdi/pinn-torch">pinn-torch</a> Is an ongoing project to re-implement every PDE solved using Physics Informed Neural Networks (PINNs) in pyTorch in a consistent way to be able to do parameter study.</div>
-        <div class="pend"></div>
-      </div>
-      <div class="project">
-        <div class="pico"><img src="./erfan_files/awesome.jpeg"></div>
-        <div class="pdesc"><a href="https://github.com/erfanhamdi/awesome-pinn">awesome-pinn</a> Is a curated list on the papers and other materials I found interesting and informative about Physics Informed Neural Networks (PINNs). feel free to make it more awesome!</div>
-        <div class="pend"></div>
-      </div>      
-
-      <div class="project">
-        <div class="pico"><img src="./erfan_files/slc.png"></div>
-        <div class="pdesc"><b>Streamline Curvatuure Method OOP</b> This was my Bs.c project. Streamline Curvature Method (SLC) is a Finite Difference method mostly used for fast and accurate quasi-2D simulation of flows inside turbomachinary and other fields. In this project I got deeper into CFD and Object-Oriented programming.
-                          <ul><li><b>Object Oriented Programming</b> architecture was used to implement this method.</li>
-                          <li>The finite difference equations were implemented in <b>Vectorized</b> form rather than using for-loops</li>
-                          <li>The programming was done in a way so that it would be possible to implement different <b>loss models</b> easily.</li></ul></div>
-        <div class="pend"></div>
-      </div>
-    </div>      
-  </div>
-
-
-  
     <div style="background-color: #eee; padding-top: 1px; margin-top: 50px; padding-bottom: 30px;">
       <div class="container">
         <div class="ctitle">featured writings</div>

@@ -1,0 +1,429 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>PINN</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-color="aquamarine">
+					<section>
+					<h2>DL for PINN</h2>
+					<br>
+					<p style="font-size:20pt">Erfan Hamdi 1401<br>erfan.hamdi@gmail.com</p>
+					</section>
+					<section>
+						<h5 style="text-transform: inherit;">Me</h5>
+						<ul style="font-size:20pt">
+							<li>Mechanical Engineering at Sharif University of Technology</li>
+							<li>3D Vision Head Developer at <a href="https://opaltech.ai">Opaltech</a></li>
+						</ul>
+					</section>
+				</section>
+				<section data-background-color="aquamarine">
+					<section>
+					<h4>Headlines</h4>
+					<table>
+						<tr>
+							<td>
+					<h6>Deep Learning</h6>
+					<ul>
+						<li><a href="#mech_ml">Mechanics of ML</a></li>
+						<li><a href="#mech_dl">Mechanics of DL</a></li>
+						<li><a href="#pytorch">PyTorch</a></li>
+						<li><a href="#tools">Tools</a></li>
+					</ul>
+							</td>
+							<td>
+					<h6>PiNN</h6>
+					<ul>
+						<li><a href="#intro">Introduction</a></li>
+						<li><a href="#problem">Problem</a></li>
+						<li><a href="#papers">Papers</a></li>
+						</ul>
+							</td>
+						</tr>
+					</table>
+				</section>
+					<section style="text-align: left;">
+						<h5>Resources</h5>
+						<table>
+							<thead>
+							  <tr>
+								<th>Deep Learning</th>
+								<th>PINN</th>
+							  </tr>
+							</thead>
+							<tbody>
+							  <tr>
+								<td>DL with Python, Chollet</td>
+								<td><a href="https://github.com/maziarraissi/PINNs" target="_blank" rel="noopener noreferrer">Maziar Raissi Blog</a></td>
+							  </tr>
+							  <tr>
+								<td>DL with PyTorch, Stevens</td>
+								<td><a href="https://arxiv.org/abs/1711.10561" target="_blank" rel="noopener noreferrer">PINN Part I</a></td>
+							  </tr>
+							  <tr>
+								<td><a href="https://pytorch.org/docs/stable/index.html" target="_blank" rel="noopener noreferrer">PyTorch Docs</a></td>
+								<td><a href="https://arxiv.org/abs/1711.10566" target="_blank" rel="noopener noreferrer">PINN part II</a></td>
+							  </tr>
+							</tbody>
+							</table>
+					</section>
+					<section style="text-align: left;">
+						<h5>Tools</h5>
+						<ul>
+							<li><a href="https://colab.research.google.com/notebooks/empty.ipynb" target="_blank">Google Colab</a></li>
+							<li>VSCode</li>
+						</ul>
+					</section>
+				</section>
+				<section data-background-color="white">
+					<section id="mech_ml">
+						<h5>Mechanics of ML</h5>
+						<p>
+							<img src="figs/ml_dl.png">
+					</section>
+					<section style="text-align: left;">
+						<h5>Tasks 🛠</h5>
+						<ul>
+							<li>Regression</li>
+							<li>Classification</li>
+							<li>Clustering</li>
+						</ul>
+					</section>
+					<section style="text-align: left;">
+						<h5>Paradigms of ML 🍰</h5>
+						<ul>
+							<li>Supervised Learning</li>
+							<ul style="font-size: 25pt;">
+								<li>Regression</li>
+								<li>Classification</li>
+							</ul>
+							<li>Unsupervised Learning</li>
+							<ul style="font-size: 25pt;">
+								<li>Clustering</li>
+								<li>Dimensionality Reduction</li>
+							</ul>
+							<li>Self-Supervised Learning</li>
+						</ul>
+					</section>
+					<section style="text-align: left;">
+						<h5>Building Blocks of ML</h5>
+						<ul>
+							<li>Data</li>
+							<li>Model</li>
+							<li>Optimizer</li>
+							<li>Loss</li>
+							<li>Metric</li>
+							<li>Evaluation</li>
+						</ul>
+					</section>
+					<section style="text-align: left;">
+						<h5>Data</h5>
+						<ul>
+							<li>Feature Vector</li>
+						</ul>
+						<img src="figs/features.png">
+					</section>
+					<section style="text-align: left;">
+						<h5>Model</h5>
+						<ul>
+							<li>Linear</li>
+							<li>Tree Based</li>
+							<li>Instance Based</li>
+							<li>Probabilistic Based</li>
+							<li>Kernel Based</li>
+							<li>Neural Networks</li>
+						</ul>
+					</section>
+					<section>No Free Lunch!</section>
+					<section style="text-align: left;">
+						<h5>Bias and Variance</h5>
+						<img src="figs/biasvariance1.png">
+				</section>
+					<section style="text-align: left;">
+						<h5>Train, Validation and Test</h5>
+						<img src="figs/train_set.png">
+					</section>
+					<section>
+						<h5>Imbalanced Dataset</h5>
+						<div style="height:480px; width:50%; float: left;">
+						<canvas data-chart="bar">
+							Target, Label
+							1, 150
+							0, 10
+						</canvas>
+					</div>
+					<div style="width: 50%; float: right;">
+					<ul>
+						<li>If we predict all 1:</li>
+						<ul>
+							<li>Class 1:</li>
+							<ul>
+							<li>Precision: 0.93</li>
+							<li>Recall: 1</li>
+							</ul>
+							<li>Class 0:</li>
+							<ul>
+							<li>Precision: 0</li>
+							<li>Recall: 0</li>
+							</ul>
+							<li>Mean Performance:</li>
+							<ul>Precision: 0.465</li>
+							<li>Recall: 0.5</li>
+					</ul>
+					</div>
+
+					</section>
+					<section style="text-align: left;">
+						<h5>sklearn</h5>
+						<img src="figs/sklearn_split.png">
+						<p><b>Stratify</b> : For imbalanced Dataset, the same distribution of training would be used for testing</p>
+					</section>
+					<section style="text-align: left;">
+						<h5>PyTorch</h5>
+						<img src="figs/torch_split.png">
+					</section>
+				<section style="text-align: left;"><h5>Cross Validation</h5>
+					<table>
+						<tbody>
+							<tr>
+								<td align="left" style="vertical-align:top;">
+									<ul style="font-size: 20pt;">
+										<li>K-fold Cross validation</li>
+										<ul>
+											<li>Shuffle Dataset and randomly partion the <b>training dataset</b> into k groups of equal size.</li>
+											<li>choose on of the k groups and hold it out.</li>
+											<li>train on the other k-1 groups.</li>
+											<li>Do it k times.</li>
+											<li>Calculate the average error.</li>
+										</ul>
+									</ul>
+								</td>
+								<td align="right">
+									<img src="figs/kcv.png" alt="" border="0"/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					</section>
+					<!-- <img src="figs/kcv.png"> -->
+					<section>K Fold Cross Validation
+						<img src="figs/kfold_sklearn.png">
+					</section>
+
+					<section>
+						<h5>Dimensionality Reduction</h5>
+						<ul>
+							<li>PCA</li>
+							<li>t-sne</li>
+							<li>Autoencoders</li>
+						</ul>
+					</section>
+					<section>
+						<h5>Clustering</h5>
+						<img src="figs/clusterings.png">
+					</section>
+				</section>
+				<section data-background-color="rgb(70, 70, 255)" style="text-align: left;">
+				<section style="text-align: center;" id="mech_dl">
+					<h5>Mechanics of DL</h5>
+					Feature Engineering !
+					<img src = "figs/dl1.png">
+				</section>
+					<section style="text-align: center;">
+						<h5>Why so deep?</h5>
+						More Complex boundaries.
+						<img src="figs/dl_paper.png">
+					</section>
+					<section>
+						<img src="figs/tf_playground.png">
+						<p><a href="http://playground.tensorflow.org/#activation=tanh&batchSize=10&dataset=xor&regDataset=reg-plane&learningRate=0.03&regularizationRate=0&noise=0&networkShape=4,4&seed=0.57195&showTestData=false&discretize=false&percTrainData=60&x=true&y=true&xTimesY=false&xSquared=false&ySquared=false&cosX=false&sinX=false&cosY=false&sinY=false&collectStats=false&problem=classification&initZero=false&hideText=false">Tensorflow Playground</a></p>
+					</section>
+					<section>
+						<h5>Computational Graph</h5>
+						<p>
+							\[\begin{aligned}
+							f(x) &amp; = (a+b)(e+1) \\
+							c &amp; = a + b\\
+							d &amp;= b + 1 \\
+							f &amp;= c \cdot d
+							\end{aligned} \]
+						</p>
+					</section>
+					<section style="text-align: center;">
+						<img src="figs/comp_graph.png" width="500", height="300">
+					</section>
+					<section style="text-align: center;">
+						<h5>derivative on edge</h5>
+						<img src="figs/comp_graph2.png" width="500", height="300">
+					</section>
+					<section style="text-align: center;">
+						<p>
+							\[\begin{aligned}
+							\frac{\partial e}{\partial a} &amp;= \frac{\partial e}{\partial c} \cdot \frac{\partial c}{\partial a}= 2\cdot 1 = 2\end{aligned}\]
+						</p>
+					</section>
+					<section>
+						<h5>Building Blocks of DL</h5>
+						<ul>
+							<li>Tensor</li>
+							<li>Model</li>
+							<li>Optimizer</li>
+							<li>Loss</li>
+							<li>Metric</li>
+						</ul>
+					</section>
+					<section style="text-align: center;">
+						<h5>What is a Tensor?</h5>
+						<p>Everything is a Tensor</p>
+						<img src="figs/tensor.gif">
+					</section>
+					<section>
+						<h5>Modeling Blocks</h5>
+						<ul>
+							<li>Linear, Convolutional, etc...</li>
+							<li>Batch Normalization</li>
+							<li>Activation Functions</li>
+							<li>Dropout</li>
+					</section>
+					<section>
+						<h5>Batch Normalization</h5>
+						<ul>
+							<li>
+						<p>The Statistics of the input to each layer changes from each one to the other.
+							So we have to normalize the input to each layer as we did in the first input layer.
+						</p>
+						</li>
+						<li>
+							<p>If not done properly you won't even converge!</p>
+						</li>
+							<li>
+								<p><a href="http://proceedings.mlr.press/v37/ioffe15.html">Accelerating Training by Reducing Internal Covaraince shift.</a></p>
+								</li>
+
+					</section>
+					<section>
+						<h5>Batch Normalization</h5>
+						<h6>Benefits</h6>
+						<ul>
+							<li>Less Sensitive to initialization</li>
+							<li>Use higher Learning Rates</li>
+							<li>Regularization Effects</li>
+					</section>
+					<section>
+						<h5>Batch Normalization</h5>
+						<img src="figs/batchnorm.png">
+					</section>
+					<section>
+						<h5>Activation Function</h5>
+						Add Nonlinearity to the Model
+						<img src="figs/actives.png", width="700", height="500">
+					</section>
+					<section>
+						<h5>Dropout</h5>
+						<p>To avoid overfitting, we can randomly dropout some of the neurons in the layer.</p>
+						<img src="figs/dropout.png">
+					</section>
+					<section>
+						<h5>PyTorch</h5>
+						<img src="figs/dropout_torch.png">
+					</section>
+					<section>
+						Loss Function (Cost Function, Error Function, Criterion)
+						<p>
+						<img src="figs/loss.png" width="500" height="400">
+							</p>
+					</section>
+					<section>
+						<p>Most used Loss Functions:</p>
+						<ul>
+							<li>Mean Squared Error (MSE)</li>
+							<li>Mean Absolute Error (MAE)</li>
+							<li>Cross Entropy</li>
+							<li>A differential Equation!</li>
+						</ul>
+					</section>
+					<section>
+						<h5>Optimizers</h5>
+						<ul>
+							<li>SGD</li>
+							<li>Adam</li>
+							<li>RMSProp</li>
+						</ul>
+					<!-- <img src="HelloCircle.gif"> -->
+				</section>
+				</section>
+				<!-- <section data-markdown>
+					<textarea data-template>
+						## Slide 1
+						A paragraph with some text and a [link](http://hakim.se).
+						---
+						## Slide 2
+						---
+						## Slide 3
+					</textarea>
+				</section>
+				<section data-background-color="aquamarine">
+					<h2>🍦</h2>
+				  </section>
+				  <section data-background-color="rgb(70, 70, 255)">
+					<section>
+					<h2>🍰</h2>
+				</section>
+
+				  </section> -->
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"></script>
+		<script src="plugin/chart/plugin.js"></script>
+		
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				mouseWheel: true,
+				chart: {
+					defaults: { 
+						color: 'lightgray', // color of labels
+						scale: { 
+							beginAtZero: true, 
+							ticks: { stepSize: 1 },
+							grid: { color: "lightgray" } , // color of grid lines
+						},
+					},
+					line: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ], "borderDash": [ [5,10], [0,0] ] }, 
+					bar: { backgroundColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+					pie: { backgroundColor: [ ["rgba(0,0,0,.8)" , "rgba(220,20,20,.8)", "rgba(20,220,20,.8)", "rgba(220,220,20,.8)", "rgba(20,20,220,.8)"] ]},
+					radar: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+				},
+				
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX, RevealChart ],
+			});
+		</script>
+	</body>
+</html>

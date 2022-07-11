@@ -1,0 +1,488 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Stereoscopic PIV</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/black.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background-color="turquoise">
+					<section>
+					<h2>Stereoscopic PIV</h2>
+					<br>
+					<p style="font-size:20pt">Erfan Hamdi<br>erfan.hamdi@gmail.com<br>99209041<br>Dr. Shafiei</p>
+					</section>
+				<section>
+					<h4>Headlines</h4>
+					<table>
+						<tr>
+							<td>
+					<h6>Introduction</h6>
+					<ul>
+						<li><a style="color:coral", href="#mech_ml">Multiview Geometry</a></li>
+						<li><a style="color:coral", href="#mech_dl">Stereoscopic PIV</a></li>
+                        <li><a style="color:coral", href="#lit">Literature Review</a></li>
+					</ul>
+                </td>
+                <td>
+                    <h6>Experiment</h6>
+					<ul>
+                        <li><a style="color:coral", href="#pytorch">Setup</a></li>
+                        <li><a style="color:coral", href="#pytorch">Calibration</a></li>
+                        <li><a style="color:coral", href="#pytorch">Procedure</a></li>
+                        <li><a style="color:coral", href="#pytorch">Results</a></li>
+						</ul>
+							</td>
+						</tr>
+					</table>
+				</section>
+				</section>
+				<section data-background-color="white", style="text-align: left;">
+					<section id="multiview", style="text-align: center;">
+						<h5>Mutliview Geometry</h5>
+						<p>
+							<figure>
+							<img src="figs/epipolar.png", width="600", height="400">
+							<figcaption style="font-size: 15px;">[cs231-course notes, 2021, Savaretse. N.]</figcaption>
+							</figure>
+					</section>
+                    <section>
+                        <h5>Applications</h5>
+                        <ul>
+                            <li>3D Scene Reconstruction</li>
+                            <li>Autonomous Driving</li>
+                            <li>Stereoscopic PIV</li>
+                        </ul>
+                    </section>
+					<section style="text-align: left;">
+						<h5>Planes of Interest 🛠</h5>
+                        <div style="margin-top: 40pt; width: 30%; float: left;">
+						<ul>
+							<li>Object Plane</li>
+							<li>Camera Plane</li>
+							<li>Image Plane</li>
+						</ul>
+                        </div>
+                        <div style="margin:0px;  width: 60%; float: right; margin-left: 0pt;">
+							<figure>
+                            <img src="figs/planes.png">
+							<figcaption style="font-size: 15px;">[PIV practical guide, 2007, Raffel]</figcaption>
+							</figure>
+                        </div>
+					</section>
+                    <section>
+                        <h5>Camera Pin-hole Model</h5>
+                        <div style="margin-top: 40pt; width: 40%; float: left;">
+                        <ul>
+                            <li>Apperture is a small hole</li>
+                        </ul>
+                        </div>
+                        <div style="margin:0px;  width: 60%; float: right; margin-left: 0pt;">
+							<figure>
+							<img src="figs/pinhole.png">
+							<figcaption style="font-size: 15px;">[cs231-course notes, 2021, Savaretse. N.]</figcaption>
+							</figure>
+                        </div>
+                    </section>
+                    <section style="text-align: center;">
+                        <h5 style="text-align: left;">Apperture</h5>
+						<figure>
+                        <img src="figs/apperture.png", width="700", height="500">
+						<figcaption style="font-size: 15px;">[cs231-course notes, 2021, Savaretse. N.]</figcaption>
+						</figure>
+                    </section>
+                    <section>
+                        <h5>Lens</h5>
+						<figure>
+                        <img src="figs/lens.png">
+						<figcaption style="font-size: 15px;">[cs231-course notes, 2021, Savaretse. N.]</figcaption>
+					</figure>
+                    </section>
+                    <section>
+                        <h5>Camera Extrinsics</h5>
+                        <p>
+                            \[\begin{equation}
+                            \begin{bmatrix}
+                            R &amp; T \\
+                            0 &amp; 1 \\
+                            \end{bmatrix}
+                            \end{equation}\]
+                        </p>
+                    </section>
+                    <section>
+                        <h5>Camera Intrinsics</h5>
+                        <p>
+                            \[\begin{equation}
+                            \begin{bmatrix}
+                            \alpha &amp; -\alpha \cot \theta &amp; c_x\\ 
+                            0 &amp; \frac{\beta}{\sin \theta} &amp; c_y\\
+                            0 &amp; 0 &amp; 1 \\
+                            \end{bmatrix}
+                            \end{equation}\]
+                        </p>
+                    </section>
+					</section>
+					<section>
+						<section id="intro_stereo">
+							<h5>Stereoscopic PIV</h5>
+							<figure>
+							<img src="figs/stereo.gif">
+							</figure>
+						</section>
+						<section>
+							<h5>ScheimpFlug Principle</h5>
+							<figsure>
+							<img src="figs/scheimp.jpeg">
+							<figcaption style="font-size: 15px;">[Scheimpflug Principle, Wikipedia Entry]</figcaption>
+							</figure>
+						</section>
+						<section>
+							<h5>ScheimpFlug Principle</h5>
+							<figure>
+							<img src="figs/Scheimpflug_Motions.gif">
+							<figcaption style="font-size: 15px;">[Scheimpflug Principle, Wikipedia Entry]</figcaption>
+							</figure>
+						</section>
+						<section>
+							<h5>ScheimpFlug Principle</h5>
+							<figure>
+							<img src="figs/Scheimpflug.gif">
+							<figcaption style="font-size: 15px;">[Scheimpflug Principle, Wikipedia Entry]</figcaption>
+							</figure>
+						</section>
+						<section>
+							<h5>Experiment Setup</h5>
+							<p>Translate</p>
+							<figure>
+							<img src="figs/translate.png", width="500", height="400">
+							<figcaption style="font-size: 15px;">[PIV practical guide, 2007, Raffel]</figcaption>
+							</figure>
+						</section>
+						<section>
+							<h5>Experiment Setup</h5>
+							<p>Rotate</p>
+							<figure>
+							<img src="figs/rotate.png", width="600", height="400">
+							<figcaption style="font-size: 15px;">[PIV practical guide, 2007, Raffel]</figcaption>
+							</figure>
+						</section>
+						<section>
+							<h5 style="text-align: left">Calibration</h5>
+							<div style="font-size: 33px; margin-top: 40pt; width: 50%; float: left;">
+							<ul>
+								<li>To reconstruct the local displacement vector</li>
+								<li>The Correspondence between the image and object space</li>
+							</ul>
+							</div>
+							<div style="margin:0px;  width: 50%; float: right; margin-left: 0pt;">
+							<figure>
+							<img src="figs/calibration.png">
+							<figcaption style="font-size: 15px;">[cs231-course notes, 2021, Savaretse. N.]</figcaption>
+							</figure>
+							</div>
+						</section>
+						<section>
+							<h5>Calibration</h5>
+							<p>
+								\[\begin{aligned}
+								X &amp;= a_0 + a_1 x + a_2 y + a_3 x y + a_4 x^2 + a_5 y^2\\
+								Y &amp;= b_0 + b_1 x + b_2 y + b_3 x y + b_4 x^2 + b_5 y^2\\
+								\end{aligned}
+							\]
+							</p>
+							<ul>
+								<li>Solve using SVD</li>
+							</ul>
+						</section>
+						<section>
+							<h5>8 Point Algorithm</h5>
+							<figure>
+							<img src="figs/8points.png">
+							<figcaption style="font-size: 15px;">[cs231-course notes, 2021, Savaretse. N.]</figcaption>
+							</figure>
+						</section>
+					</section>
+					<section data-background-color="rgb(130, 70, 255)">
+						<section>
+							<h5>Literature Review</h5>	
+						</section>
+						<section>
+							<h5>Dual-Plane PIV</h5>
+							<div style="font-size: 33px; margin-top: 40pt; width: 50%; float: left;">
+							
+								<ol>
+									<li class="fragment">Particle is in the Light sheet</li>
+									<li class="fragment">Particla moves out of plane</li>
+									<li class="fragment">Light sheet moves towards an out of plane direction</li>
+								</ol>
+								<ul>
+									<li class="fragment">Raffel, Markus, et al. (1996).</li>
+								</ul>
+							
+							</div>
+							<div style="margin:0px;  width: 50%; float: right; margin-left: 0pt;">
+								<figure>
+								<img src="figs/dualplane.png">
+								<figcaption style="font-size: 15px;">[PIV practical guide, 2007, Raffel]</figcaption>
+							</figure>
+							</div>
+						</section>
+						<section>
+							<h5>Holographic PIV</h5>
+							<div style="font-size: 33px; margin-top: 40pt; width: 100%; float: left;">
+							<ul>
+								<li>
+								Light sheet is expanded into a thick slab.
+								</li>
+								<li>
+								Collier, Robert. Optical holography. Elsevier, 2013.
+								</li>
+							</ul>
+							</div>
+						</section>
+					</section>
+					<section data-background-color="rgb(70, 70, 255)" style="text-align: left">
+						<section style="text-align: center">
+							<h5>Experiment</h5>
+							<figure>
+							<img src="figs/experiment.png", width="500", height="400">
+							<figcaption style="font-size: 15px;">[Stereoscopic PIV measurements using low‑cost action cameras, 2021, Kaufer]</figcaption>
+							</figure>
+						</section>
+						<section>
+							<h5>Stereoscopic PIV measurements using low‑cost action cameras</h5>
+							<p>Theo Kaufer<br>Experiments in Fluids<br>2021</p>
+						</section>
+						<section>
+							<h5>Goal</h5>
+							<p>Reduction of the cost of Stereoscopic PIV experiment.</p>
+						</section>
+						<section>
+							<h5>Equipments</h5>
+								
+									<div class="fragment", style="font-size: 30px; margin-top: 0pt; width: 50%; float: left;">
+										<ul>
+											<li>GoPro Hero 5</li>
+												<ul>
+													<li>Sensor Size: 1.55um x 1.55um</li>
+													<li>1280x720 @ 240fps</li>
+													<li>Rolling Shutter Mechanism</li>
+
+												</ul>
+										</ul>
+									</div>
+									<div class="fragment", style="margin:0px;  width: 50%; float: right; margin-left: 0pt;">
+								<!-- <li class="fragment"> -->
+										<img src="figs/gopro.jpeg", width="300", height="300">
+										<figcaption style="font-size: 15px;">[GoPro.com]</figcaption>
+									</div>
+								
+						</section>
+						<section>
+							<h5>Experiment</h5>
+							<div class="fragment", style="font-size: 33px; margin-top: 0pt; width: 50%; float: left;">
+								<ul>
+									<li>Thorlabs SOLIS-525C</li>
+										<ul>
+											<li>211Hz Pulse was Used</li>
+										</ul>
+								</ul>
+							</div>
+							<div class="fragment", style="margin:0px;  width: 50%; float: right; margin-left: 0pt;">
+						<!-- <li class="fragment"> -->
+								<img src="figs/led.jpeg", width="300", height="300">
+								<figcaption style="font-size: 15px;">[Thorlabs.com]</figcaption>
+							</div>
+						</section>
+						<section>
+							<h5>Experiment</h5>
+							<div class="fragment", style="font-size: 33px; margin-top: 0pt; width: 50%; float: left;">
+								<ul>
+									<li>LaVision Calibration Plane GMBH-204-15</li>
+								</ul>
+							</div>
+							<div class="fragment", style="margin:0px;  width: 50%; float: right; margin-left: 0pt;">
+						<!-- <li class="fragment"> -->
+								<img src="figs/lavision.png", width="300", height="300">
+								<figcaption style="font-size: 15px;">[LaVision.com]</figcaption>
+							</div>
+						</section>
+						<section>
+							<h5>Exp1: Planar PIV</h5>
+							<div class="fragment", style="font-size: 30px; margin-top: 0pt; width: 50%; float: left;">
+							<ul>
+								<li>Planar PIV using 1 Camera</li>
+								<li>Pulse and Continuous Wave Lighting</li>
+								<li>128pxx128px interrogation window for first pass</li>
+								<li>50% overlap</li>
+								<li>24x24px interrogation for final pass</li>
+								<li>75% overlap</li>
+							</ul>
+							</div>
+							<div class="fragment", style="margin:0px;  width: 40%; float: right; margin-left: 0pt;">
+								<img src="figs/cw.png", width="300", height="300">
+								</div>
+						</section>
+						<section>
+							<div class="fragment", style="font-size: 30px; margin-top: 0pt; width: 50%; float: left;">
+							<img src="figs/comp1.png", width="500", height="400">
+							</div>
+							<div class="fragment", style="margin:0px;  width: 50%; float: right; margin-left: 0pt;">
+							<img src="figs/comp11.png", width="500", height="400">
+							</div>
+						</section>
+						<section>
+							<h5>Exp2: Stereoscopic PIV with plane tilt</h5>
+							<div class="fragment", style="font-size: 30px; margin-top: 40pt; width: 30%; float: left;">
+							<ul>
+								<li>Rotating disk can now tilt about z axis</li>
+								<li>Two cameras are in 30 degrees angle</li>
+								<!-- <li>Pulse and Continuous Wave Lighting</li> -->
+							</ul>
+							</div>
+							<div class="fragment", style="margin:0px;  width: 50%; float: right; margin-left: 0pt;">
+								<img src="figs/comp21.png", width="300", height="300">
+							</div>
+						</section>
+						<section>
+							<div class="fragment", style="font-size: 33px; margin-top: 0pt; width: 50%; float: left;">
+								<ul>
+									<li>Experiment setup</li>
+								</ul>
+							</div>
+							<div class="fragment", style="margin:0px;  width: 50%; float: right; margin-left: 0pt;">
+								<img src="figs/comp2.png", width="300", height="300">
+							</div>
+						</section>
+						<section>
+							<div class="fragment", style="font-size: 33px; margin-top: 0pt; width: 50%; float: left;">
+							<img src="figs/comp23.png", width="500", height="400">
+							</div>
+							<div class="fragment", style="margin:0px;  width: 50%; float: right; margin-left: 0pt;">
+							<img src="figs/comp24.png", width="500", height="400">
+							</div>
+						</section>
+						<section>
+							<h5>Exp3: Stereoscopic PIV on free jet</h5>
+							<div class="fragment", style="font-size: 33px; margin-top: 0pt; width: 50%; float: left;">
+								<ul><li>A pump is used to create the free jet right towards the camera plane</li></ul>
+							</div>
+							<div class="fragment", style="margin:0px;  width: 50%; float: right; margin-left: 0pt;">
+								<img src="figs/comp31.png", width="300", height="500">
+							</div>
+						</section>
+						<section>
+							<div class="fragment", style="font-size: 33px; margin-top: 0pt; width: 50%; float: left;">
+								<img src="figs/comp321.png", width="500", height="400">
+							</div>	
+							<div class="fragment", style="margin:0px;  width: 50%; float: right; margin-left: 0pt;">
+								<img src="figs/comp322.png", width="500", height="400">
+							</div>
+						</section>
+						<section>
+							<div class="fragment", style="font-size: 33px; margin-top: 0pt; width: 50%; float: left;">
+								<img src="figs/comp33.png", width="500", height="400">
+							</div>
+							<div class="fragment", style="margin:0px;  width: 50%; float: right; margin-left: 0pt;">
+								<img src="figs/comp34.png", width="500", height="400">
+							</div>
+						</section>
+						<section>
+							<h5>Dark ribbon phenomenon</h5>
+							<div class="fragment", style="font-size: 33px; margin-top: 0pt; width: 50%; float: left;">
+								<ul>
+									<li>Rolling Shutter Mechanism</li>
+								</ul>
+							</div>
+							<div class="fragment", style="margin:0px;  width: 50%; float: right; margin-left: 0pt;">
+								<img src="figs/rolling.jpeg", width="500", height="400">
+								<figcaption style="font-size: 20px;">[Rolling Shutter, Wikipedia Entry]</figcaption>
+							</div>
+						</section>
+						<section>
+							<h5>Dark ribbon phenomenon</h5>
+							<div class="fragment", style="font-size: 33px; margin-top: 0pt; width: 50%; float: left;">
+								<ul>
+									<li>Difference between light source pulse frequency and camera frame rate</li>
+								</ul>
+							</div>
+							<div class="fragment", style="margin:0px;  width: 50%; float: right; margin-left: 0pt;">
+								<img src="figs/dark_ribbon.png", width="400", height="400">
+							</div>
+						</section>
+						<section style="text-align: center;">
+							<h5>Questions</h5>
+				</section>
+				<!-- <section data-markdown>
+					<textarea data-template>
+						## Slide 1
+						A paragraph with some text and a [link](http://hakim.se).
+						---
+						## Slide 2
+						---
+						## Slide 3
+					</textarea>
+				</section>
+				<section data-background-color="aquamarine">
+					<h2>🍦</h2>
+				  </section>
+				  <section data-background-color="rgb(70, 70, 255)">
+					<section>
+					<h2>🍰</h2>
+				</section>
+
+				  </section> -->
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script src="plugin/math/math.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.2.0/chart.min.js"></script>
+		<script src="plugin/chart/plugin.js"></script>
+		
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				slideNumber: 'c/t',
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				mouseWheel: true,
+				chart: {
+					defaults: { 
+						color: 'lightgray', // color of labels
+						scale: { 
+							beginAtZero: true, 
+							ticks: { stepSize: 1 },
+							grid: { color: "lightgray" } , // color of grid lines
+						},
+					},
+					line: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ], "borderDash": [ [5,10], [0,0] ] }, 
+					bar: { backgroundColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+					pie: { backgroundColor: [ ["rgba(0,0,0,.8)" , "rgba(220,20,20,.8)", "rgba(20,220,20,.8)", "rgba(220,220,20,.8)", "rgba(20,20,220,.8)"] ]},
+					radar: { borderColor: [ "rgba(20,220,220,.8)" , "rgba(220,120,120,.8)", "rgba(20,120,220,.8)" ]}, 
+				},
+				
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX, RevealChart ],
+			});
+		</script>
+	</body>
+</html>
