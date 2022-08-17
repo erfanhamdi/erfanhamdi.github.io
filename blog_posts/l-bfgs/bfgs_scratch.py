@@ -24,4 +24,15 @@ def calculate_hessian(f, x):
     """
     Calculate the Hessian of f at x.
     """
-    return central_difference_derivative(f, x, order = 2))    
+    return central_difference_derivative(f, x, order = 2)
+
+
+if __name__ == "__main__":
+    
+    # Innitial guess
+    x0 = np.array([1, 1])
+    # Objective function
+    # plt.contour(X, Y, Z)
+    # plt.show()
+    deriv = central_difference_derivative(Z, x, order = 1)
+
