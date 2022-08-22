@@ -35,7 +35,7 @@
 <p>
     <ul>
         <li>Now we are going to find the transformation that mapped base points (reference point sets) to the second transformed set of points aka. source point set.</li>
-        <li>In order to do that we have to find a first estimate of the pair of points and the transformation between them.</li>
+        <li>In order to do that we have to find a first estimate of a pair of points and the transformation between them.</li>
         <li>A good way to initialize our guess is to find the closest point to each point in the reference point set.</li>
         <li>After finding the closest point, we have to calculate the transformation that can map the point in reference set to that closest point of last step.</li>
         <li>In order to do that we have to first formulate the problem into a least square minimization problem because it has many robust and fast methods to solve and is easier too!</li>
@@ -47,7 +47,7 @@
         \[p'_i = R p_i + T\]
         where R is a 3x3 rotation matrix and T is a 3x1 translation vector.
         we can formulate a minimization problem to find \(R\) and \(T\) as follows:
-        \[\min_{R,T} \sum_{i=1}^{n} \|p'_i - R p_i - T\|^2\].
+        \[\min_{R,T} \sum_{i=1}^{n} \|p'_i - R p_i - T\|^2\]
         If the solution to the least square problem is \(\hat{R}\) and \(\hat{T}\), then the centroid of point set {p"_i} and 
         {p_i} are the same.
         \[p"_i = \hat{R} p_i + \hat{T}\]
@@ -56,15 +56,18 @@
         \[q_i = p_i - p_c\]
         \[q'_i = p'_i - p'_c\]
         now the original minimization problem is formulated as a least square problem:
-        \[\min_{R,T} \sum_{i=1}^{n} \|q'_i - R q_i\|^2\].
+        \[\min_{R,T} \sum_{i=1}^{n} \|q'_i - R q_i\|^2\]
         Then all we have to do is to find \(R\) by solving the above least square problem using SVD decomposition
         and then we can simply find \(T\) by putting the \(R\) into this equation:
         \[\hat{T} = p' - \hat{R}p\]
-
-
-
-
-    </ul>
+        In order to do that we first define the matrix H like this:
+        \[H = q_i\dot q'_i\]
+        Then we can find the SVD decomposition of H like this:
+        \[H = U S V^T\]
+        Then we get \(X\) to be:
+        \[X = VU^T\]
+        Then we have to calculate the determinant of X; if it was +1 then \(X\) is the rotation matrix we have been looking for! 
+        if it was -1 then the algorithm has failed which is not so likely to happen.
 </p>
 <h2>Results</h2>
 <p>
@@ -77,6 +80,7 @@
         </div>
     </ul>
 </p>
+<p>you can find an implementation of it in my <a href="https://github.com/erfanhamdi/erfanhamdi.github.io/blob/main/blog_posts/icp/icp_main.py">github repository</a> along with all the figures.</p>
 
 </body>
 </html>

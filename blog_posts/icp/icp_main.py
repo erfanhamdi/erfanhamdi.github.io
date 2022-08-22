@@ -1,10 +1,6 @@
-from email.mime import base
-from turtle import width
 from pyDOE import lhs
 import numpy as np
 import matplotlib.pyplot as plt
-# from icp import icp
-
 
 def rotate(points, degree):
     """Rotate points around origin by degree."""
@@ -72,7 +68,6 @@ def icp(reference, source):
     ref_point_idx = 0
     loss = 1
     while loss>0.1:
-    # for ref_point in reference:
         src_centroid = find_centroid(source)
         ref_point = reference[ref_point_idx]
         dists = calculate_point_distance(ref_point, source)
@@ -88,7 +83,6 @@ def icp(reference, source):
         plot_transition(source, source_new.T)
         source = source_new.T
         plt.scatter(source[:, 0], source[:, 1], c = 'g', alpha=0.7)
-
         ref_point_idx += 1
     return R, T
 
@@ -98,7 +92,7 @@ def plot_transition(initial, final):
     for i in range(len(initial)):
         plt.arrow(initial[i, 0], initial[i, 1], dx_dy[i, 0], dx_dy[i, 1], color = 'r', alpha = 0.2, width=0.05)
         plt.title('Transition')
-        # plt.savefig(f'{figure_dir}transition.png')
+        plt.savefig(f'{figure_dir}transition.png')
 
 if __name__ == '__main__':
     np.random.seed(123)
@@ -121,11 +115,11 @@ if __name__ == '__main__':
     ax.set_ylabel('y')
     ax.set_title('Base Points')
     ax.grid()
-    # plt.savefig(figure_dir + 'reference_points.png')
+    plt.savefig(figure_dir + 'reference_points.png')
     
     # Second set of points by applying random rotation, translation and scaling to the base points
     # Rotation
-    rotated_points = rotate(reference_points, 0)
+    rotated_points = rotate(reference_points, 5)
     # Translation
     translated_points = translate(rotated_points, 2, 1)
     # Scaling
@@ -135,7 +129,7 @@ if __name__ == '__main__':
     ax.scatter(source_points[:,0], source_points[:,1], color='red', label = 'Transformed Points',  s=80, facecolors='none', edgecolors='r', linewidths=3)
     ax.legend()
     ax.set_title('Transformed Points')
-    # plt.savefig(figure_dir + 'source_points.png')
+    plt.savefig(figure_dir + 'source_points.png')
     # calculating the transformation matrix from line1 to line2
     R, T = icp(reference_points, source_points)
 
