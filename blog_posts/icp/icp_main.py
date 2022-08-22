@@ -3,7 +3,7 @@ from turtle import width
 from pyDOE import lhs
 import numpy as np
 import matplotlib.pyplot as plt
-from icp import icp
+# from icp import icp
 
 
 def rotate(points, degree):
@@ -98,11 +98,11 @@ def plot_transition(initial, final):
     for i in range(len(initial)):
         plt.arrow(initial[i, 0], initial[i, 1], dx_dy[i, 0], dx_dy[i, 1], color = 'r', alpha = 0.2, width=0.05)
         plt.title('Transition')
-        plt.savefig(f'{figure_dir}transition.png')
+        # plt.savefig(f'{figure_dir}transition.png')
 
 if __name__ == '__main__':
     np.random.seed(123)
-    figure_dir = './figures/'
+    figure_dir = './blog_posts/icp/figures/'
     # Generate a Latin Hypercube Sampling Design
     top_left_bound = np.array([5, 5])
     bottom_right_bound = np.array([0, 0])
@@ -121,7 +121,7 @@ if __name__ == '__main__':
     ax.set_ylabel('y')
     ax.set_title('Base Points')
     ax.grid()
-    plt.savefig(figure_dir + 'reference_points.png')
+    # plt.savefig(figure_dir + 'reference_points.png')
     
     # Second set of points by applying random rotation, translation and scaling to the base points
     # Rotation
@@ -135,7 +135,7 @@ if __name__ == '__main__':
     ax.scatter(source_points[:,0], source_points[:,1], color='red', label = 'Transformed Points',  s=80, facecolors='none', edgecolors='r', linewidths=3)
     ax.legend()
     ax.set_title('Transformed Points')
-    plt.savefig(figure_dir + 'source_points.png')
+    # plt.savefig(figure_dir + 'source_points.png')
     # calculating the transformation matrix from line1 to line2
     R, T = icp(reference_points, source_points)
 
