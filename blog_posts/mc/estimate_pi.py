@@ -12,9 +12,6 @@ fig, ax = plt.subplots()
 ax.set_aspect('equal')
 ax.add_patch(plt.Circle((0, 0), 1, color='r', fill=False))
 ax.add_patch(plt.Rectangle((-1, -1), 2, 2, color='b', fill=False))
-# write the radius of the circle on an arrow inside it
-# ax.annotate('r=1', xy=(0, 0), xytext=(0.5, 0.5),
-#             arrowprops=dict(facecolor='black', shrink=0.05))
 
 ax.set_xlim(-1.1, 1.1)
 ax.set_ylim(-1.1, 1.1)
@@ -24,5 +21,3 @@ ax.scatter(x[inside], y[inside], color='r', s=1)
 ax.scatter(x[~inside], y[~inside], color='b', s=1)
 plt.savefig('blog_posts/mc/darts_flying.png')
 plt.show()
-# turn off the axis
-
